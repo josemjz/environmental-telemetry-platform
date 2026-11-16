@@ -1,6 +1,6 @@
 # Environmental Telemetry Platform
 
-An environmental monitoring and data analytics project integrating Arduino hardware, Python, PostgreSQL, and environmental data sources using Weather APIs and physical sensors. 
+An environmental monitoring and data analytics project integrating Arduino hardware, Python, PostgreSQL, and environmental data sources using weather APIs and physical sensors. 
 
 ## Project Overview
 
@@ -14,7 +14,7 @@ The current iteration focuses on developing a reliable, testable data ingestion 
 * **Hardware**: Arduino MKR WiFi 1010, RGB Shield, variety of environmental sensors 
 * **Programming**: Python, Arduino C++
 * **Database**: PostgreSQL, SQLAlchemy
-* **Data Sources**: PurpleAIR API, environmental sensors
+* **Data Sources**: OpenWeather API, environmental sensors
 * **Analytics**: SQL, Power BI
 
 ## Development Status
