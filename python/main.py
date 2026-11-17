@@ -13,7 +13,7 @@ import serial
 import pymysql
 
 
-from weather import WeatherData
+from python.models import WeatherData
 
 
 """
