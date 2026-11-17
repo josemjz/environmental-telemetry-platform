@@ -28,6 +28,9 @@ My first prototype used an Arduino MKR WiFi 1010 connected wirelessly to an envi
 
 <img src="assets/images/arduino-mkr-wifi-1010.jpeg" width="250">
 
+**RGB Shield Demonstration**
+
+https://github.com/user-attachments/assets/5af61f7a-40b0-446b-95cb-6a09e115477f
 
 
 In addition to displaying data, I wanted to collect and store it. 
