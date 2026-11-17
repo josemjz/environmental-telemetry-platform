@@ -41,6 +41,8 @@ Finally, I connected the database to Power BI and created a table visualization 
 
 **Original Power BI Dashboard**
 
+<img src="assets/images/power-bi-original-data-preview.png" width="600">
+
 The original implementation wasn't polished, but it worked, and, most importantly, it demonstrated that I could collect data from physical hardware I coded in C++, transfer it through Python, store it in a relational database, and visualize the results. 
 
 That experience is what inspired me to revisit and exapand it into a more complete platform, with a modular databse, additonal physical sensors, and a stronger focus on data engineering and analytics. 
