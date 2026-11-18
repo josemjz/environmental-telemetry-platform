@@ -33,6 +33,61 @@ class Source(Base):
         self.apis = []
         self.devices = []
 
+
+class Device(Base):
+    __tablename__ = 'device'
+
+    ## atributes
+    device_id = Column("device_id", Integer, primary_key=True, autoincrement=True)
+    source_id = Column("source_id", Integer, ForeignKey("source.source_id"), nullable=False)
+
+    device_name = Column("device_name", String, nullable=False)
+    device_model = Column("device_model", String)
+
+    ## parents
+    source = relationship('Source', back_populates="devices", viewonly=False)
+
+    ## Children
+    sensors = relationship("Sensor", back_populates='device', viewonly=False)
+
+    ## Create instance function
+
+    def __init__(self, source, device_name: str, device_model: str):
+        self.source_id = source.source_id
+
+        self.device_name = device_name
+        self.device_model = device_model
+
+        self.sensors = []
+
+
+class Sensor(Base):
+    __tablename__ = 'sensor'
+
+    # attributes
+    sensor_id = Column("sensor_id", Integer, primary_key=True, autoincrement=True)
+    device_id = Column("device_id", Integer, ForeignKey("device.device_id"), nullable=False)
+
+    sensor_name = Column("sensor_name", String, nullable=False)
+    sensor_model = Column("sensor_model", String)
+
+    # parents
+    device = relationship("Device", back_populates="sensors", viewonly=False)
+
+    # children
+    analogReadings = relationship("AnalogReading", back_populates="sensor", viewonly=False)
+    dhtReadings = relationship("DHTReading", back_populates="sensor", viewonly=False)
+
+    def __init__(self, device, sensor_name: str, sensor_model:str):
+        self.device_id = device.device_id
+
+        self. sensor_name = sensor_name
+        self.sensor_model = sensor_model
+
+        self.analogReadings = []
+        self.dhtReadings = []
+
+
 class Location(Base):
     __tablename__ = 'location'
 
@@ -46,6 +101,9 @@ class Location(Base):
     # children
     apiReadings = relationship("APIReading", back_populates='location', viewonly=False)
 
+    analogReadings = relationship("AnalogReading", back_populates="location", viewonly=False)
+    dhtReadings = relationship("DHTReading", back_populates="location", viewonly=False)
+
     # create instance function
 
     def __init__(self, location_name: str, lat: float, lon: float):
@@ -56,6 +114,63 @@ class Location(Base):
 
         # instantiate location list
         self.apiReadings = []
+
+        self.analogReadings = []
+        self.dhtReadings = []
+
+
+class AnalogReading(Base):
+    __tablename__ = 'analogReading'
+
+    ## attributes
+    reading_id = Column("reading_id", Integer, primary_key=True, autoincrement=True)
+    sensor_id = Column("sensor_id", Integer, ForeignKey("sensor.sensor_id"), nullable=False)
+    location_id = Column("location_id", Integer, ForeignKey("location.location_id"), nullable=False)
+
+    recorded_at = Column("recorded_at", DateTime(timezone=True), nullable=False)
+    temperature_f = Column("temperature_f", Float)
+    raw_value = Column("raw_value", Float)
+
+    # parents
+    sensor = relationship("Sensor", back_populates="analogReadings", viewonly=False)
+    location = relationship("Location", back_populates="analogReadings", viewonly=False)
+
+    # no children
+
+    def __init__(self, sensor, location, recorded_at: datetime, temperature_f: float, raw_value: float):
+        self.sensor_id = sensor.sensor_id
+        self.location_id = location.location_id
+
+        self.recorded_at = recorded_at
+        self.temperature_f = temperature_f
+        self.raw_value = raw_value
+
+
+class DHTReading(Base):
+    __tablename__ = 'dhtReading'
+
+    ## attributes
+    reading_id = Column("reading_id", Integer, primary_key=True, autoincrement=True)
+    sensor_id = Column("sensor_id", Integer, ForeignKey("sensor.sensor_id"), nullable=False)
+    location_id = Column("location_id", Integer, ForeignKey("location.location_id"), nullable=False) 
+
+    recorded_at = Column("recorded_at", DateTime(timezone=True), nullable=False)
+    temperature_f = Column("temperature_f", Float)
+    humidity_pct = Column("humidity_pct", Float)
+
+    # parents
+    sensor = relationship("Sensor", back_populates="dhtReadings", viewonly=False)
+    location = relationship("Location", back_populates="dhtReadings", viewonly=False)
+
+    # no children
+
+    def __init__(self, sensor, location, recorded_at:datetime, temperature_f: float, humidity_pct: float):
+        self.sensor_id = sensor.sensor_id
+        self.location_id = location.location_id
+
+        self.recorded_at = recorded_at
+        self.temperature_f = temperature_f
+        self.humidity_pct = humidity_pct
 
 
 class API(Base):
