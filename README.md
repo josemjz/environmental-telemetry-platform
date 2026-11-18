@@ -28,6 +28,9 @@ My first prototype used an Arduino MKR WiFi 1010 connected wirelessly to an envi
 
 <img src="assets/images/arduino-mkr-wifi-1010.jpeg" width="250">
 
+**RGB Shield Demonstration**
+
+https://github.com/user-attachments/assets/5af61f7a-40b0-446b-95cb-6a09e115477f
 
 
 In addition to displaying data, I wanted to collect and store it. 
@@ -37,6 +40,8 @@ Using Python, I established a serial connection between the Arduino and my compu
 Finally, I connected the database to Power BI and created a table visualization using the collected data. 
 
 **Original Power BI Dashboard**
+
+<img src="assets/images/power-bi-original-data-preview.png" width="600">
 
 The original implementation wasn't polished, but it worked, and, most importantly, it demonstrated that I could collect data from physical hardware I coded in C++, transfer it through Python, store it in a relational database, and visualize the results. 
 
