@@ -65,5 +65,5 @@ The repository currently contains the original Arduino sketches and the original
 The original Arduino prototype displayed air-quality measurements and classifications on an RGB Shield.
 
 A separate DHT11 prototype was developed to measure temperature and humidity.
-hmm
+
 Future development will explore combining these inputs into a unified environmental telemetry platform.
