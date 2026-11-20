@@ -43,7 +43,7 @@ Test children tables
 Test db queries
 """
 
-def testChildrenTables():
+def testAPITables():
     sess = Session()
 
     try:
@@ -56,7 +56,10 @@ def testChildrenTables():
         # add parent records to sesh before children to avoid source_id being None
         sess.add(source)
         sess.add(location)
-        sess.flush() # This makes it so the transactions take place but are not commited to the disk, so that we can enter future child tables 
+
+        # Insert parent records and get their ID's without commiting. 
+        # allows us to roll everything back if a child record insert fails. 
+        sess.flush() 
 
         # api <- source
         api = models.API(source=source, api_name="TestName1")
@@ -80,12 +83,28 @@ def testChildrenTables():
         )
         # add records to our sesh
         sess.add(apiReading)
-
-        # now adding some test records for children tables
-
+        
         # save records to postgres
         sess.commit()
 
+        # query records we inserted
+        apis = sess.query(models.API).all()
+        readings = sess.query(models.APIReading).all()
+
+        for api in apis:
+            print(api.api_id, api.api_name)
+
+        for reading in readings:
+            print(reading.reading_id, reading.recorded_at, reading.aqi, reading.nh3)
+
+    except Exception:
+        sess.rollback()
+        raise
+    finally:
+        Session.remove()
+
+
 
 if __name__ == "__main__":
-    testParentTables()
+    #testParentTables()
+    testAPITables()

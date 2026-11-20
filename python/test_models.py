@@ -1,7 +1,7 @@
 from sqlalchemy.orm import configure_mappers
 
 # import our models so sqlalchemy can register them
-import test_models
+import python.test_models as test_models
 
 # validate ORM configuration
 def testModelRelationships():
